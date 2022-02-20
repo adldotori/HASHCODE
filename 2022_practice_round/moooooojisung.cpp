@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define BEAM 5
 using namespace std;
 
 int C, L;
@@ -99,47 +100,32 @@ int main(int argc, char const *argv[])
     }
 
     int real = eval(answer);
-    for (int i = 0; i < 30; i++)
-    {
-        set<int> copy = answer;
-        for (auto ans : copy)
-        {
-            answer.erase(ans);
-            int score = eval(answer);
 
-            if (score <= real)
-                answer.insert(ans);
-            else
+    priority_queue<pair<int, set<int>>> q;
+    q.push(make_pair(real, answer));
+
+    for (int i = 0; i < 1; i++)
+    {
+        vector<pair<int, set<int>>> tmp;
+        for (int j = 0; j < min(int(q.size()), BEAM); j++)
+            tmp.push_back(q.top());
+
+        for (int j = 0; j < tmp.size(); j++)
+        {
+            for (int igd = 0; igd < ingredients.size(); igd++)
             {
-                real = score;
-                break;
+                set<int> answer = tmp[j].second;
+                if (find(answer.begin(), answer.end(), igd) != answer.end())
+                    answer.erase(igd);
+                else
+                    answer.insert(igd);
+
+                q.push(pair<int, set<int>>(eval(answer), answer));
             }
         }
     }
-    cout << "[+]: " << eval(answer) << endl;
 
-    for (int i = 0; i < 30; i++)
-    {
-        for (int igd = 0; igd < ingredients.size(); igd++)
-        {
-            if (answer.find(igd) != answer.end())
-                continue;
-            answer.insert(igd);
-            int score = eval(answer);
-
-            if (score < real)
-            {
-                answer.erase(igd);
-            }
-            else
-            {
-                real = score;
-                break;
-            }
-        }
-    }
-    cout << "[+]: " << eval(answer) << endl;
-
+    answer = q.top().second;
     fout << answer.size() << " ";
 
     for (auto a : answer)
