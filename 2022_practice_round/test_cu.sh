@@ -1,5 +1,5 @@
-file=youjisung
-g++ -o test $file.cpp -std=c++11
+file=yooooujisung
+nvcc -o test $file.cu
 mkdir output_data/$file
 ./test input_data/a_an_example.in.txt output_data/$file/out_a.txt; ./eval input_data/a_an_example.in.txt output_data/$file/out_a.txt
 ./test input_data/b_basic.in.txt output_data/$file/out_b.txt; ./eval input_data/b_basic.in.txt output_data/$file/out_b.txt

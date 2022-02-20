@@ -1,6 +1,7 @@
 ## Timeline
 
 ~ :30 : 문제 이해, I/O 구현, evaluation code 구현
+
 ~ :45 : 테스트 케이스 분석
 
 ~ 1:30 : greedy
@@ -31,3 +32,4 @@
 | youjisung.cpp       | 2   | 5   | 4   | 1596 | 1920    | 그래프 (vertex: client, edge: 한 클라이언트는 좋아하고 한 클라이언트는 싫어하는 재료가 있는 경우) 문제로 변환. 엣지가 없는 최대 정점 그래프 찾는 문제! [https://codeforces.com/blog/entry/99020](https://codeforces.com/blog/entry/99020) |
 | yooujisung.cpp      | 2   | 5   | 5   | 1708 | 2025    | 정점 삭제할 때 degree 하나씩 낮추기, degree 0으로 시작                                                                                                                                                                                    |
 | yoooujisung.cpp     | 2   | 5   | 5   | 1784 | 2025    | yooujisung + moooooojisung                                                                                                                                                                                                                |
+| yooooujisung.cu     | 2   | 5   | 5   | 1788 | 2025    | with cuda                                                                                                                                                                                                                                 |
