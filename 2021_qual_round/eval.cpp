@@ -58,9 +58,6 @@ int main(int argc, char const *argv[])
 
     fin >> D >> I >> S >> V >> F;
 
-    vector<pair<int, int>> street_info;
-    vector<string> street_name_list;
-
     for (int s = 0; s < S; s++)
     {
         int start, end, length;

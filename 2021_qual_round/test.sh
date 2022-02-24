@@ -1,4 +1,4 @@
-file=moojisung
+file=mojisung
 g++ -o test $file.cpp -std=c++11
 mkdir out/$file
 ./test in/a.txt out/$file/a.txt;./eval in/a.txt out/$file/a.txt
