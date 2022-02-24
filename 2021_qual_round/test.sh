@@ -1,9 +1,11 @@
-file=mooojisung
+file=moojisung
 g++ -o test $file.cpp -std=c++11
-mkdir output_data/$file
-./test input_data/a.txt output_data/$file/out_a.txt; ./eval input_data/a.txt output_data/$file/out_a.txt
-./test input_data/b.txt output_data/$file/out_b.txt; ./eval input_data/b.txt output_data/$file/out_b.txt
-./test input_data/c.txt output_data/$file/out_c.txt; ./eval input_data/c.txt output_data/$file/out_c.txt
-./test input_data/d.txt output_data/$file/out_d.txt; ./eval input_data/d.txt output_data/$file/out_d.txt
-./test input_data/e.txt output_data/$file/out_e.txt; ./eval input_data/e.txt output_data/$file/out_e.txt
-./test input_data/f.txt output_data/$file/out_f.txt; ./eval input_data/f.txt output_data/$file/out_f.txt
+mkdir out/$file
+./test in/a.txt out/$file/a.txt;./eval in/a.txt out/$file/a.txt
+./test in/b.txt out/$file/b.txt;./eval in/b.txt out/$file/b.txt
+./test in/c.txt out/$file/c.txt;./eval in/c.txt out/$file/c.txt
+./test in/d.txt out/$file/d.txt;./eval in/d.txt out/$file/d.txt
+./test in/e.txt out/$file/e.txt;./eval in/e.txt out/$file/e.txt
+./test in/f.txt out/$file/f.txt;./eval in/f.txt out/$file/f.txt
+# cd google-hashcode-score-2021
+# cargo run --release -- ../in/a.txt ../in/b.txt ../in/c.txt ../in/d.txt ../in/e.txt ../in/f.txt -o ../out/$file/a.txt ../out/$file/b.txt ../out/$file/c.txt ../out/$file/d.txt ../out/$file/e.txt ../out/$file/f.txt;cd ..

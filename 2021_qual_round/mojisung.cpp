@@ -2,8 +2,9 @@
 using namespace std;
 
 int D, I, S, V, F;
-int city[10001][10001];  // S * S
-vector<int> route[1001]; // V
+int city[10001][10001];      // S * S
+int car_count[10001][10001]; // S * S
+vector<int> route[1001];     // V
 
 int A;
 vector<int> traffic[10001]; // S * D
@@ -12,6 +13,8 @@ queue<int> street_queue[100001]; // S
 int street_map[10000][10000];
 int state[1000][4];       // V * (city, start, end, loc)
 int state_traffic[10001]; // I
+map<string, pair<int, int>> m;
+map<pair<int, int>, string> m_reverse;
 
 int main(int argc, char const *argv[])
 {
@@ -23,9 +26,6 @@ int main(int argc, char const *argv[])
 
     fin >> D >> I >> S >> V >> F;
 
-    vector<pair<int, int>> street_info;
-    vector<string> street_name_list;
-
     for (int s = 0; s < S; s++)
     {
         int start, end, length;
@@ -34,10 +34,10 @@ int main(int argc, char const *argv[])
         fin >> street;
         fin >> length;
 
-        city[start][end] = -length;
-        street_info.push_back(make_pair(start, end));
+        city[start][end] = length;
         street_map[start][end] = s;
-        street_name_list.push_back(street);
+        m_reverse.insert(make_pair(make_pair(start, end), street));
+        m.insert(make_pair(street, make_pair(start, end)));
     }
 
     for (int i = 0; i < V; i++)
@@ -49,21 +49,29 @@ int main(int argc, char const *argv[])
             string tmp;
             fin >> tmp;
 
-            int idx = find(street_name_list.begin(), street_name_list.end(), tmp) - street_name_list.begin();
+            pair<int, int> idx = m[tmp];
             if (j == 0)
-                route[i].push_back(street_info[idx].first);
-            route[i].push_back(street_info[idx].second);
-            city[street_info[idx].first][street_info[idx].second] = abs(city[street_info[idx].first][street_info[idx].second]);
+                route[i].push_back(idx.first);
+            route[i].push_back(idx.second);
+            car_count[idx.first][idx.second] += 1;
         }
     }
+    cout << "read";
 
     int out_I = 0;
+    float sum[10001] = {
+        0,
+    };
     for (int i = 0; i < I; i++)
     {
         vector<int> inc;
         for (int j = 0; j < I; j++)
-            if (city[j][i] > 0)
+            if (car_count[j][i] > 0)
+            {
                 inc.push_back(j);
+                sum[i] += car_count[j][i];
+            }
+        sum[i] /= (float)inc.size();
         if (inc.empty())
             continue;
         out_I++;
@@ -73,11 +81,13 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < I; i++)
     {
         vector<int> inc;
+        vector<float> count;
         for (int j = 0; j < I; j++)
         {
-            if (city[j][i] > 0)
+            if (car_count[j][i] > 0)
             {
                 inc.push_back(j);
+                count.push_back((float)car_count[j][i]);
             }
         }
         if (inc.empty())
@@ -86,9 +96,11 @@ int main(int argc, char const *argv[])
         fout << inc.size() << endl;
         for (int j = 0; j < inc.size(); j++)
         {
-            int idx = find(street_info.begin(), street_info.end(), make_pair(inc[j], i)) - street_info.begin();
-            fout << street_name_list[idx] << " ";
-            fout << 1 << endl;
+            fout << m_reverse[make_pair(inc[j], i)] << " ";
+            int ans = (int)(count[j] / sum[i]);
+            if (ans == 0)
+                ans = 1;
+            fout << ans << endl;
         }
     }
 }
